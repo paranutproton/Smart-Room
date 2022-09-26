@@ -3,7 +3,7 @@ from datetime import datetime
 import pandas as pd
 import sys
 
-with serial.Serial('/dev/cu.usbmodem144203', 9600, timeout=1) as ser:
+with serial.Serial('/dev/cu.usbmodem14403', 9600, timeout=1) as ser:
     counter=0
     if sys.argv[1] == 'co2':
         while(True):
@@ -52,20 +52,22 @@ with serial.Serial('/dev/cu.usbmodem144203', 9600, timeout=1) as ser:
                 data.to_csv('dht11_data.csv', index=False)
     elif sys.argv[1] == 'all':
         while(True):
-            data = pd.read_csv('sensors_data.csv')
-            now = datetime.now()
-            current_time = now.strftime("%d/%m/%Y %H:%M:%S")
             line = ser.readline()
-            print(current_time, line.decode('UTF-8').strip())
-            temp = pd.DataFrame()
-            temp['time'] = [current_time]
-            temp['Temperature'] = [float(line.decode('UTF-8').strip().split(", ")[0])]
-            temp['RH'] = [float(line.decode('UTF-8').strip().split(", ")[1])]
-            temp['Distance'] = [float(line.decode('UTF-8').strip().split(", ")[2])]
-            if line.decode('UTF-8').strip().split(", ")[3] == "Obstacle detected":
-                temp['Detection'] = [1]
-            elif line.decode('UTF-8').strip().split(", ")[3] == "No obstacle detected":
-                temp['Detection'] = [0]
-            data = pd.concat([data, temp])
-            data.to_csv('sensors_data.csv', index=False)
-            print('saved!')
+            if line.decode('UTF-8').strip() != "":
+                data = pd.read_csv('sensors_data.csv')
+                now = datetime.now()
+                current_time = now.strftime("%d/%m/%Y %H:%M:%S")
+                print(current_time, line.decode('UTF-8').strip())
+                temp = pd.DataFrame()
+                temp['time'] = [current_time]
+                temp['Temperature'] = [float(line.decode('UTF-8').strip().split(", ")[0])]
+                temp['RH'] = [float(line.decode('UTF-8').strip().split(", ")[1])]
+                temp['Distance'] = [float(line.decode('UTF-8').strip().split(", ")[2])]
+                if line.decode('UTF-8').strip().split(", ")[3] == "Obstacle detected":
+                    temp['Detection'] = [1]
+                elif line.decode('UTF-8').strip().split(", ")[3] == "No obstacle detected":
+                    temp['Detection'] = [0]
+                temp['Light'] = [float(line.decode('UTF-8').strip().split(", ")[4])]
+                data = pd.concat([data, temp])
+                data.to_csv('sensors_data.csv', index=False)
+                print('saved!')
