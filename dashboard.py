@@ -60,4 +60,4 @@ def move_servo(status):
         time.sleep(0.01)
         return f''
 
-app.run_server(debug=True)
+app.run_server(debug=False, host="0.0.0.0", port=8080)
