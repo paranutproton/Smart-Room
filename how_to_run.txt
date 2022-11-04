@@ -1,0 +1,8 @@
+requirements: file.json must be in the same folder
+
+1. run sensor_data_serial.py
+---- wait for data to be collected and pushed to db
+
+2. run sensor_query.py to query data
+3. add specify date as input
+4. you will get a result dataframe
