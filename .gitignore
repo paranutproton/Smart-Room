@@ -5,3 +5,4 @@ __pycache__/
 .ipynb_checkpoints/
 google-cloud-sdk/
 smartroom-db-976fcb1d1541.json
+.idea/
