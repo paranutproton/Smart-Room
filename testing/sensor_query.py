@@ -20,6 +20,7 @@ def select_date():
     result = pd.DataFrame(columns=['time','Temperature','RH','Distance','Dectection','Light'])
     temp = pd.DataFrame()
     date_input = input("Enter date: ")
+    print(type(date_input))
     sql_query = f"""
     SELECT * FROM smartroom-db.sensor_data.sensor_db_alter 
     WHERE date LIKE '{date_input}'

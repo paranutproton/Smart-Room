@@ -9,7 +9,9 @@ def serve_layout() -> html.Div:
         html.H1("Smart Room Dashboard", style={'font-size': 75, 'text-align': 'center', 'font-family': 'Arial Black'}),
 
         html.Div([
-            dcc.Link('LED Status', href='/apps/led_status'),
+            dcc.Link('real time data', href='/apps/real_time.py'),
+            html.Br(),
+            dcc.Link('historical data', href='/apps/historical.py'),
             html.Br()
         ], style={'margin': 30, 'text-align': 'center', 'font-family': 'Arial'})
 

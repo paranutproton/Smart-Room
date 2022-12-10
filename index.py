@@ -5,7 +5,7 @@ from dash.dependencies import Input, Output
 
 from app import app
 from apps import (
-    home
+    home, real_time, historical
 )
 
 app.layout = html.Div([
@@ -22,10 +22,16 @@ app.layout = html.Div([
 def display_page(pathname) -> Union[html.Div, str]:
     if pathname == '/':
         return home.serve_layout()
-
+    elif pathname == '/apps/real_time.py':
+        print('real_time')
+        return real_time.serve_layout()
+    elif pathname == '/apps/historical.py':
+        print('historical')
+        return historical.serve_layout()
     else:
+        print(pathname)
         return '404'  # Page not found
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port=8801)
+    app.run_server(debug=True, host='0.0.0.0', port=8803)

@@ -10,7 +10,7 @@ def push_db():
     data.to_gbq(destination_table='sensor_data.sensor_db',project_id='smartroom-db',if_exists='append')
     print('pushed')
 
-with serial.Serial('/dev/cu.usbmodem1434203', 9600, timeout=1) as ser:
+with serial.Serial('/dev/cu.usbmodem1434403', 9600, timeout=1) as ser:
     counter=0
     if sys.argv[1] == 'co2':
         while(True):
@@ -67,7 +67,7 @@ with serial.Serial('/dev/cu.usbmodem1434203', 9600, timeout=1) as ser:
                 current_time = now.strftime("%Y-%m-%d %H:%M:%S")
                 current_date = now.strftime("%Y-%m-%d")
                 counter = counter+1
-                if counter%30==0:
+                if counter%10==0: #30 the best
                     temp = pd.DataFrame()
                     temp['time'] = [current_time]
                     temp['date'] =  [current_date]
@@ -81,6 +81,7 @@ with serial.Serial('/dev/cu.usbmodem1434203', 9600, timeout=1) as ser:
                     temp['Light'] = [float(line.decode('UTF-8').strip().split(", ")[4])]
                     data = pd.concat([data, temp])
                     data.to_csv('sensors_data.csv', index=False)
+                    data.to_csv('real_time.csv', index=False)
                     print('saved!')
                     print(type(now))
                     if len(data) > 300:
