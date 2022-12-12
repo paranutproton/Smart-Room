@@ -10,7 +10,7 @@ import time
 def serve_layout():
     return html.Div([
     html.H1('Data Visualization of Sensors'),
-    dcc.Dropdown(['Temperature', 'Relative Humidity', 'Ultrasonic', 'Infrared', 'Light'], 'Temperature', id='dropdown'),
+    dcc.Dropdown(['Temperature', 'Relative Humidity', 'Ultrasonic', 'Infrared', 'Light', 'Vibration', 'TVOC', 'CO2', 'PIR'], 'Temperature', id='dropdown'),
     dcc.Graph(id="graph1"),
     dcc.Interval(
             id='interval-component',
@@ -40,4 +40,16 @@ def update_line_chart(sensor, n):
         return fig
     elif sensor == 'Light':
         fig = px.line(data[['time','Light']], x="time", y="Light", title='Light Intensity')
+        return fig
+    elif sensor == 'Vibration':
+        fig = px.line(data[['time','Vibration']], x="time", y="Vibration", title='Vibration')
+        return fig
+    elif sensor == 'TVOC':
+        fig = px.line(data[['time','TVOC']], x="time", y="TVOC", title='TVOC')
+        return fig
+    elif sensor == 'CO2':
+        fig = px.line(data[['time','CO2']], x="time", y="CO2", title='CO2')
+        return fig
+    elif sensor == 'PIR':
+        fig = px.line(data[['time','PIR']], x="time", y="PIR", title='PIR')
         return fig
